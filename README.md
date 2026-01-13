@@ -1,6 +1,6 @@
 # Datastar example with Rust
 
-1. install Zig (as C compiler)
+1. install [Zig](https://github.com/ziglang/zig) (as C compiler) + [Wild](https://github.com/davidlattimore/wild) (as faster linker)
 
 2. change file permissions:
 
