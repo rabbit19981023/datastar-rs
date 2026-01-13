@@ -3,8 +3,7 @@ use axum::{
     response::{Sse, sse::Event},
     routing::get,
 };
-use futures_util::StreamExt;
-use futures_util::{Stream, stream};
+use futures_util::{Stream, StreamExt, stream};
 use maud::{Markup, html};
 use std::{convert::Infallible, time::Duration};
 
