@@ -6,6 +6,7 @@ use axum::{
 use futures_util::{Stream, StreamExt, stream};
 use maud::{Markup, html};
 use std::{convert::Infallible, time::Duration};
+use tokio::time::sleep;
 
 #[tokio::main]
 async fn main() {
@@ -48,10 +49,10 @@ async fn get_hal_html() -> Markup {
 }
 
 async fn get_hal_sse() -> Sse<impl Stream<Item = Result<Event, Infallible>>> {
-    let times = 5;
+    let repeat = 5;
     let delay = 800;
 
-    let stream = stream::iter(0..times).then(move |i| async move {
+    let stream = stream::iter(0..repeat).then(move |i| async move {
         let patch = html! {
             div id="hal-sse" { "Times: " (i) ". I’m sorry, Dave. I’m afraid I can’t do that. (text/event-stream)" }
         };
@@ -59,7 +60,7 @@ async fn get_hal_sse() -> Sse<impl Stream<Item = Result<Event, Infallible>>> {
             .event("datastar-patch-elements")
             .data(format!("elements {}", patch.into_string()));
 
-        tokio::time::sleep(Duration::from_millis(delay)).await;
+        sleep(Duration::from_millis(delay)).await;
 
         Ok(event)
     });
